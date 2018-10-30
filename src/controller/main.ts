@@ -12,7 +12,7 @@ class Index {
     private config(): void {
         this.router.get('/', (req: Request, res: Response) => {
             res.status(200).send({
-                title: "Node Express API",
+                title: "Node Express API + Typescript",
                 version: "0.0.1"
             });  
         });
