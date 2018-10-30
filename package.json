@@ -16,8 +16,10 @@
     "typescript": "^3.1.4"
   },
   "scripts": {
+    "apidoc": "rm -rf apidoc && apidoc -f 'controller/.*.js$' -i ./ -o apidoc/",
+    "ts-run": "ts-node ./lib/server.ts",
     "build": "tsc",
-    "dev": "ts-node ./lib/server.ts",
+    "dev": "npm run apidoc && npm run ts-run",
     "start": "nodemon ./dist/lib/server.js",
     "prod": "npm run build && npm run start"
   },

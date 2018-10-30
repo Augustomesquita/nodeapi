@@ -1,0 +1,9 @@
+{
+    "name": "nodeapi",
+    "version": "0.0.1",
+    "description": "Documentação do projeto nodeapi",
+    "apidoc": {
+      "title": "Documentaçao",
+      "url" : "http://localhost:3000/apidoc"
+    }
+  }
