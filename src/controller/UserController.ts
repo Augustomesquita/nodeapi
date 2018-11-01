@@ -24,6 +24,7 @@ class UserController {
          * @apiGroup user
          * @apiVersion  0.0.1
          * @@apiPermission all
+         * @apiSampleRequest /api/v1/user/:id
          * 
          * @apiParam  {string} id Id do usuário
          * 
