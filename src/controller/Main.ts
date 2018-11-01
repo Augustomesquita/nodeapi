@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 
 
-class Index {
+class Main {
 
     public router: Router = Router();
 
@@ -19,4 +19,4 @@ class Index {
     }
 
 }
-export default new Index().router;
+export default new Main().router;

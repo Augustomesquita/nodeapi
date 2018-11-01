@@ -19,9 +19,9 @@
     "apidoc": "rm -rf apidoc && apidoc -f 'controller/.*.js$' -i ./ -o apidoc/",
     "ts-run": "ts-node ./lib/server.ts",
     "build": "tsc",
-    "dev": "npm run apidoc && npm run ts-run",
+    "dev": " npm run ts-run",
     "start": "nodemon ./dist/lib/server.js",
-    "prod": "npm run build && npm run start"
+    "prod": "npm run build && npm run apidoc && npm run start"
   },
   "keywords": [],
   "author": "",

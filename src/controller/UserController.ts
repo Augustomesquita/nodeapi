@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 
 
-class PersonController {
+class UserController {
 
     // Assign router to the express.Router() instance
     public router: Router = Router();
@@ -19,13 +19,23 @@ class PersonController {
 
         /**
          * 
-         * @api {GET} /person getById
-         * @apiName nodeapi
-         * @@apiParam  {String} id Id da person
-         * @apiGroup person
+         * @api {get} /api/v1/user/:id getById
+         * @@apiName nodeapi
+         * @apiGroup user
          * @apiVersion  0.0.1
+         * @@apiPermission all
          * 
-         * @apiSuccess (200) {type} id descrição
+         * @apiParam  {string} id Id do usuário
+         * 
+         * @apiParamExample  {type} Request-Example: 
+         * {
+         *      id = 10
+         * }
+         * 
+         * @apiSuccessExample {type} Success-Response: 
+         * {
+         *      "Hello, 10"
+         * }
          * 
          */
         this.router.get('/:id', (req: Request, res: Response) => {
@@ -36,4 +46,4 @@ class PersonController {
 }
 
 // Export the express.Router() instance to be used by server.ts
-export default new PersonController().router;
+export default new UserController().router;

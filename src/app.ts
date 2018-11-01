@@ -2,8 +2,8 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 
-import main from "./controller/main";
-import personController from "./controller/personController";
+import main from "./controller/Main";
+import userController from "./controller/UserController";
 
 class App {
 
@@ -35,7 +35,7 @@ class App {
         this.app.use(bodyParser.urlencoded({ extended: false }));
 
         this.app.use('/api/v1/', main);
-        this.app.use('/api/v1/person', personController);
+        this.app.use('/api/v1/user', userController);
     }
 
 }
