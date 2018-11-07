@@ -19,12 +19,12 @@ class UserController {
 
         /**
          * 
-         * @api {get} /api/v1/user/:id getById
+         * @api {get} /api/v1/users/:id getById
          * @@apiName nodeapi
-         * @apiGroup user
+         * @apiGroup users
          * @apiVersion  0.0.1
          * @@apiPermission all
-         * @apiSampleRequest /api/v1/user/:id
+         * @apiSampleRequest /api/v1/users/:id
          * 
          * @apiParam  {string} id Id do usuário
          * 

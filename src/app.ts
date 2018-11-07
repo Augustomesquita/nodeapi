@@ -34,9 +34,14 @@ class App {
         // support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
 
-        this.app.use('/api/v1/', main);
-        this.app.use('/api/v1/user', userController);
+        // configure routes
+        this.routes();
     }
+
+    private routes() {
+        this.app.use('/api/v1/', main);
+        this.app.use('/api/v1/users', userController);
+    } 
 
 }
 
