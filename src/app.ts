@@ -2,8 +2,13 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 
-import main from "./controller/Main";
-import userController from "./controller/UserController";
+//ROUTES
+import mainRoute from "./route/mainRoute";
+import userRoute from "./route/userRoute";
+
+//BD
+import mongoose = require("mongoose");
+
 
 class App {
 
@@ -22,6 +27,11 @@ class App {
     }
 
     private config(): void {
+        // connect to mongoose
+        const MONGODB_CONNECTION: string = "mongodb+srv://mongodb:mongodb@nodeapi-y3gu0.mongodb.net/";
+        mongoose.Promise = global.Promise;
+        mongoose.connect(MONGODB_CONNECTION, { dbName: "nodeapidb", useNewUrlParser: true });
+
         // enable cors on application
         this.app.use(cors(this.corsOptions))
 
@@ -39,9 +49,9 @@ class App {
     }
 
     private routes() {
-        this.app.use('/api/v1/', main);
-        this.app.use('/api/v1/users', userController);
-    } 
+        this.app.use('/api/v1/', mainRoute);
+        this.app.use('/api/v1/users', userRoute);
+    }
 
 }
 

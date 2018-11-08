@@ -8,13 +8,13 @@
         //     "type": "node",
         //     "request": "launch",
         //     "name": "Launch Program",
-        //     "program": "${workspaceFolder}/index.js"
+        //     "program": "${workspaceFolder}"
         // },
         {
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/bin/server.js"
+            "program": "${workspaceFolder}/dist/lib/server.js"
         }
     ]
 }

@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 
 
-class Main {
+class MainRoute {
 
     public router: Router = Router();
 
@@ -19,4 +19,4 @@ class Main {
     }
 
 }
-export default new Main().router;
+export default new MainRoute().router;
