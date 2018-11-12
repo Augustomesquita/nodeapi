@@ -9,7 +9,8 @@
     "express": "^4.15.4",
     "mongodb": "^3.1.9",
     "mongoose": "^5.3.10",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "socket.io": "^2.1.1"
   },
   "devDependencies": {
     "@types/mongodb": "^3.1.14",
@@ -21,10 +22,10 @@
   },
   "scripts": {
     "apidoc": "rm -rf apidoc && apidoc -f 'controller/.*.js$' -i ./ -o apidoc/",
-    "ts-run": "ts-node ./lib/server.ts",
+    "ts-run": "ts-node ./index.ts",
     "build": "tsc",
     "dev": " npm run ts-run",
-    "start": "nodemon ./dist/lib/server.js",
+    "start": "nodemon ./dist/index.js",
     "prod": "npm run build && npm run apidoc && npm run start"
   },
   "keywords": [],

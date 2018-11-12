@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
+import * as socketIo from 'socket.io';
 
 //ROUTES
 import mainRoute from "./route/mainRoute";
@@ -8,13 +9,22 @@ import userRoute from "./route/userRoute";
 
 //BD
 import mongoose = require("mongoose");
+import { createServer, Server } from "http";
 
 
-class App {
+export class App {
 
-    public app: express.Application;
+    private app: express.Application;
 
-    // CORS Settings
+    private apiRestServer: Server;
+    private websocketServer: Server;
+
+    private io: socketIo.Server;
+
+    private static readonly PORT_WS: String = "4000";
+    private static readonly PORT_API: String = "3000";
+
+    // CORS Settings.
     private corsOptions = {
         origin: 'http://localhost:4200',
         optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
@@ -22,16 +32,42 @@ class App {
 
 
     constructor() {
-        this.app = express();
-        this.config();
+        // inicializa banco de dados.
+        this.startMongoose();
+
+        // configura e inicializa api rest.
+        this.setupAppForAPI();
+        this.startApiRest();
+
+        // configura e inicializa socket io.
+        this.setupAppForSocketIO();
+        this.startSocketIO();
+
+        // inicializa serviçoes em background.
         this.startBackgroundServices();
     }
 
-    private config(): void {
-        // connect to mongoose
+    /**
+     * Inicializa mongoose (conexão com o banco) e deixa
+     * preparado instância do mesmo para ser usado por toda
+     * a aplicação.
+     */
+    private startMongoose() {
         const MONGODB_CONNECTION: string = "mongodb+srv://mongodb:mongodb@nodeapi-y3gu0.mongodb.net/";
         mongoose.Promise = global.Promise;
         mongoose.connect(MONGODB_CONNECTION, { dbName: "nodeapidb", useNewUrlParser: true });
+    }
+
+    /**
+     * Configura a aplicação para futura criação do servidor de API Rest
+     * baseado no mesmo.
+     */
+    private setupAppForAPI(): void {
+        // clear app
+        this.app = null;
+
+        // instancia app
+        this.app = express();
 
         // enable cors on application
         this.app.use(cors(this.corsOptions))
@@ -39,17 +75,72 @@ class App {
         // url to access api documentation
         this.app.use('/apidoc', express.static('apidoc'));
 
+        // adiciona suporte para 'post' do tipo application/json para post
+        this.app.use(bodyParser.json());
+
+        // adiciona suporte para 'post' do tipo application/x-www-form-urlencoded 
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+    }
+
+    /**
+     * Configura a aplicação para futura criação do servidor Socket IO
+     * baseado no mesmo.
+     */
+    private setupAppForSocketIO(): void {
+        // clear app
+        this.app = null;
+
+        // instancia app
+        this.app = express();
+
+        // enable cors on application
+        this.app.use(cors(this.corsOptions))
+
         // support application/json type post data
         this.app.use(bodyParser.json());
 
         // support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
-
-        // configure routes
-        this.routes();
     }
 
-    private routes() {
+    /**
+     * Incializa servidor Socket IO e suas rotas sockets.
+     */
+    private startSocketIO() {
+        this.websocketServer = createServer(this.app);
+        this.io = socketIo(this.websocketServer);
+
+        this.websocketServer.listen(App.PORT_WS, () => {
+            console.log(`Servidor websocket rodando na porta ${App.PORT_WS}`);
+        });
+
+        this.io.on('connect', (socket: any) => {
+            console.log('Cliente conectado na porta %s.', App.PORT_WS);
+
+            socket.on('disconnect', () => {
+                console.log('Cliente desconectado.');
+            });
+        });
+    }
+
+    /**
+     * Inicializa servidor API Rest e suas rotas.
+     */
+    private startApiRest() {
+        // configura rotas da api
+        this.apiRoutes();
+
+        // inicializa servidor
+        this.apiRestServer = createServer(this.app);
+        this.apiRestServer.listen(App.PORT_API, function () {
+            console.log(`Servidor API REST rodando na porta ${App.PORT_API}.`);
+        });
+    }
+
+    /**
+     * Configura rotas da API.
+     */
+    private apiRoutes() {
         this.app.use('/api/v1/', mainRoute);
         this.app.use('/api/v1/users', userRoute);
     }
@@ -88,6 +179,8 @@ class App {
         setTimeout(() => this.setAlarmClock(false), timeUntilNextCall);
     }
 
-}
+    public getApp(): express.Application {
+        return this.app;
+    }
 
-export default new App().app;
+}
