@@ -1,4 +1,4 @@
-﻿# Node API Server
+﻿# Server-side
 Node API Server (Express + TypeScript) + Socket IO Server.
 
 ## Comandos
@@ -13,7 +13,7 @@ Para ver a documentação será preciso rodar o projeto ao menos uma vez no modo
 A aplicação nodeapi server cria e disponibiliza dois servidores internamente (API Rest na porta 3000 e SocketIO na porta 4000), além disso, roda uma rotina de alarme que é disparada todos os dias às 00:00.
 
 
-# nodeapi client
+# Client-side
 Angular 6  + Socket IO Client
 
 ## Sobre
