@@ -1,7 +1,6 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
-import * as socketIo from 'socket.io';
 
 //ROUTES
 import mainRoute from "./route/mainRoute";
@@ -15,13 +14,8 @@ import { createServer, Server } from "http";
 export class App {
 
     private app: express.Application;
-
     private apiRestServer: Server;
-    private websocketServer: Server;
 
-    private io: socketIo.Server;
-
-    private static readonly PORT_WS: String = "4000";
     private static readonly PORT_API: String = "3000";
 
     // CORS Settings.
@@ -38,10 +32,6 @@ export class App {
         // configura e inicializa api rest.
         this.setupAppForAPI();
         this.startApiRest();
-
-        // configura e inicializa socket io.
-        this.setupAppForSocketIO();
-        this.startSocketIO();
 
         // inicializa serviçoes em background.
         this.startBackgroundServices();
@@ -101,26 +91,6 @@ export class App {
 
         // support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
-    }
-
-    /**
-     * Incializa servidor Socket IO e suas rotas sockets.
-     */
-    private startSocketIO() {
-        this.websocketServer = createServer(this.app);
-        this.io = socketIo(this.websocketServer);
-
-        this.websocketServer.listen(App.PORT_WS, () => {
-            console.log(`Servidor websocket rodando na porta ${App.PORT_WS}`);
-        });
-
-        this.io.on('connect', (socket: any) => {
-            console.log('Cliente conectado na porta %s.', App.PORT_WS);
-
-            socket.on('disconnect', () => {
-                console.log('Cliente desconectado.');
-            });
-        });
     }
 
     /**

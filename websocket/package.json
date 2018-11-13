@@ -15,18 +15,16 @@
   "devDependencies": {
     "@types/mongodb": "^3.1.14",
     "@types/mongoose": "^5.3.1",
-    "apidoc": "^0.17.6",
     "nodemon": "^1.17.3",
     "ts-node": "^7.0.1",
     "typescript": "^3.1.4"
   },
   "scripts": {
-    "apidoc": "rm -rf apidoc && apidoc -f 'controller/.*.js$' -i ./ -o apidoc/",
     "ts-run": "ts-node ./index.ts",
     "build": "tsc",
     "dev": " npm run ts-run",
     "start": "nodemon ./dist/index.js",
-    "prod": "npm run build && npm run apidoc && npm run start"
+    "prod": "npm run build && npm run start"
   },
   "keywords": [],
   "author": "",
