@@ -65,3 +65,44 @@ dist/
 
 # doc
 apidoc/
+
+
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+# compiled output
+/nodeapi-client/dist
+/nodeapi-client/tmp
+/nodeapi-client/out-tsc
+
+# dependencies
+/nodeapi-client/node_modules
+
+# IDEs and editors
+/nodeapi-client/.idea
+/nodeapi-client.project
+/nodeapi-client.classpath
+/nodeapi-client.c9/
+/nodeapi-client*.launch
+/nodeapi-client.settings/
+/nodeapi-client*.sublime-workspace
+
+# IDE - VSCode
+/nodeapi-client.vscode/*
+/nodeapi-client!.vscode/settings.json
+/nodeapi-client!.vscode/tasks.json
+/nodeapi-client!.vscode/launch.json
+/nodeapi-client!.vscode/extensions.json
+
+# misc
+/nodeapi-client/.sass-cache
+/nodeapi-client/connect.lock
+/nodeapi-client/coverage
+/nodeapi-client/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
