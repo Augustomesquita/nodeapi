@@ -8,4 +8,11 @@ export enum EventSocket {
     RECONNECT_FAILED = 'reconnect_failed'
 }
 
-export const SERVER_URL = 'http://localhost:4000'
+export const SERVER_URL_SOCKETIO = 'http://localhost:4000'
+export const SERVER_URL_API = 'http://localhost:3000/api/v1/'
+
+export interface IUser {
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+}

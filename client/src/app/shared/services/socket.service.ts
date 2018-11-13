@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import * as socketIo from 'socket.io-client';
-import { EventSocket, SERVER_URL } from '../socket.enum';
+import { EventSocket, SERVER_URL_SOCKETIO } from '../const-commons';
 
 @Injectable()
 export class SocketService {
   private socket;
 
   public initSocket(): void {
-    this.socket = socketIo(SERVER_URL);
+    this.socket = socketIo(SERVER_URL_SOCKETIO);
   }
 
   public onEvent(event: EventSocket): Observable<any> {
