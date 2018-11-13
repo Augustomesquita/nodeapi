@@ -3,22 +3,27 @@
   <div style="text-align: center">
     <h1>Aplicação SocketIO Client</h1>
     <p>Endereço do servidor Socket IO: <i style="color: blueviolet">{{ urlServerSocketIo }}</i></p>
-
-    <br />
-    <p [ngStyle]="messageColor()">Status: {{ connectionStatus.message }}</p>
+    <p [ngStyle]="messageSocketIoStatusColor()">Status: {{ connectionSocketIoStatus.message }}</p>
   </div>
 
   <div>
     <h1>Aplicação API Client</h1>
-    <button (click)="getAllUsers()">LER USUÁRIOS DA API</button>
-
-    <table>
+    <p>Endereço da API: <i style="color: darkslateblue">{{ urlServerApi }}</i></p>
+    <p [ngStyle]="messageApiStatusColor()">Status: {{ connectionApiStatus.message }}</p>
+    
+    <button (click)="getAllUsersFromAPI()">ATUALIZAR LISTA DE USUÁRIOS</button>
+    <table style="border: 1px solid black;">
       <tr>
         <th>Nome</th>
+        <th>Sobrenome</th>
+        <th>Email</th>
+        <th></th>
       </tr>
       <tr *ngFor="let user of users">
         <td>{{ user.firstName }}</td>
-        <td><button (click)="deleteUserById(user._id)">EXCLUIR</button></td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td><button (click)="deleteUserByIdFromAPI(user._id)">EXCLUIR</button></td>
       </tr>
     </table>
   </div>
