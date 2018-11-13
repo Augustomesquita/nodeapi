@@ -1,0 +1,10 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align: center">
+  <p>Aplicação SocketIO Client</p>
+  <p>Endereço do servidor Socket IO: <i style="color: blueviolet">{{ urlServerSocketIo }}</i></p>
+  
+  <br/>
+  <p [ngStyle]="messageColor()">Status: {{ connectionStatus.message }}</p>
+</div>
+
+<router-outlet></router-outlet>
