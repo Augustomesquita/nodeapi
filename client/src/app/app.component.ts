@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { SocketService } from './shared/services/socket.service';
 import { EventSocket, SERVER_URL_SOCKETIO, SERVER_URL_API } from './shared/const-commons';
 import { IUserModel } from './../../../api/src/model/user'
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,8 @@ export class AppComponent implements OnInit {
   private connectionSocketIoStatus: any;
   private connectionApiStatus: any;
 
-  private users: IUserModel[];
+  private users: MatTableDataSource<IUserModel>;
+  private columnsToDisplay: String[];
 
   constructor(private socketService: SocketService, private http: HttpClient) { }
 
@@ -38,6 +40,8 @@ export class AppComponent implements OnInit {
       message: 'Conexão com API inativa.',
       color: 'red'
     }
+
+    this.columnsToDisplay = ['firstName', 'lastName', 'email', 'delete']
 
   }
 
@@ -113,8 +117,7 @@ export class AppComponent implements OnInit {
   private getAllUsersFromAPI(): any {
     this.http.get(SERVER_URL_API + 'users').subscribe(
       (usersJson) => {
-        this.users = usersJson as IUserModel[];
-
+        this.users = new MatTableDataSource(usersJson as IUserModel[]);
         this.connectionApiStatus = {
           message: 'Conexão com API ativa.',
           color: 'green'
@@ -132,8 +135,8 @@ export class AppComponent implements OnInit {
   private deleteUserByIdFromAPI(id: number): any {
     this.http.delete(SERVER_URL_API + 'users/' + id).subscribe((res) => {
       if (res) {
-        this.users = this.users.filter((user) => user._id !== id);
 
+        this.users = new MatTableDataSource(this.users.data.filter((user) => user._id !== id));
         this.connectionApiStatus = {
           message: 'Conexão com API ativa.',
           color: 'green'

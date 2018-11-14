@@ -10,22 +10,38 @@
     <h1>Aplicação API Client</h1>
     <p>Endereço da API: <i style="color: darkslateblue">{{ urlServerApi }}</i></p>
     <p [ngStyle]="messageApiStatusColor()">Status: {{ connectionApiStatus.message }}</p>
-    
-    <button (click)="getAllUsersFromAPI()">ATUALIZAR LISTA DE USUÁRIOS</button>
-    <table style="border: 1px solid black;">
-      <tr>
-        <th>Nome</th>
-        <th>Sobrenome</th>
-        <th>Email</th>
-        <th></th>
-      </tr>
-      <tr *ngFor="let user of users">
-        <td>{{ user.firstName }}</td>
-        <td>{{ user.lastName }}</td>
-        <td>{{ user.email }}</td>
-        <td><button (click)="deleteUserByIdFromAPI(user._id)">EXCLUIR</button></td>
-      </tr>
-    </table>
+
+    <button (click)="getAllUsersFromAPI()" mat-raised-button color="primary">ATUALIZAR LISTA DE USUÁRIOS</button>
+    <br/>
+
+    <div>
+      <mat-table [dataSource]="users" class="mat-elevation-z8">
+        <ng-container matColumnDef="firstName">
+          <mat-header-cell *matHeaderCellDef> Primeiro Nome </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.firstName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+          <mat-header-cell *matHeaderCellDef> Último Nome </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.lastName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef> E-mail </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let element"><button mat-raised-button (click)="deleteUserByIdFromAPI(element._id)"
+              color="primary">EXCLUIR</button></mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+
+      </mat-table>
+    </div>
   </div>
 </div>
 
