@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { SocketService } from './shared/services/socket.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AppMaterialModule } from './app-material/app-material.module';
+import { ToastrModule } from 'ng6-toastr-notifications';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { AppMaterialModule } from './app-material/app-material.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     AppMaterialModule,
     HttpClientModule,
     AppRoutingModule

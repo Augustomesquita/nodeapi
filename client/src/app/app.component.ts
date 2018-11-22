@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { SocketService } from './shared/services/socket.service';
 import { EventSocket, SERVER_URL_SOCKETIO, SERVER_URL_API } from './shared/const-commons';
 import { IUserModel } from './../../../api/src/model/user'
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,7 @@ export class AppComponent implements OnInit {
   private users: MatTableDataSource<IUserModel>;
   private columnsToDisplay: String[];
 
-  constructor(private socketService: SocketService, private http: HttpClient) { }
+  constructor(private socketService: SocketService, private http: HttpClient, public toastr: ToastrManager, vcr: ViewContainerRef) { }
 
   ngOnInit(): void {
     this.urlServerSocketIo = SERVER_URL_SOCKETIO;
@@ -104,10 +105,20 @@ export class AppComponent implements OnInit {
           color: 'red'
         }
       });
+
+    this.socketService.onEvent(EventSocket.MESSAGE)
+      .subscribe((message) => {
+        console.log(message);
+        this.toastr.successToastr(message.message, "Nova mensagem!");
+      });
   }
 
   private messageSocketIoStatusColor(): Object {
     return { color: this.connectionSocketIoStatus.color };
+  }
+
+  private sendTesteMessage() {
+    this.socketService.sendMessage(EventSocket.MESSAGE, { message: "teste" });
   }
 
   private messageApiStatusColor(): Object {
@@ -125,8 +136,8 @@ export class AppComponent implements OnInit {
       }, (error) => {
         console.log(error);
 
-        this.connectionSocketIoStatus = {
-          message: 'Desconectado do servidor Socket IO.',
+        this.connectionApiStatus = {
+          message: 'Conexão com API inativa.',
           color: 'red'
         }
       });

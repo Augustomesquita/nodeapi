@@ -80,6 +80,11 @@ export class App {
             socket.on('disconnect', () => {
                 console.log('Cliente desconectado.');
             });
+
+            socket.on('message', (message) => {
+                console.log("Message Received: " + message);
+                socket.broadcast.emit('message', JSON.parse(message));
+            })
         });
     }
 

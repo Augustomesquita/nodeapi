@@ -5,7 +5,8 @@ export enum EventSocket {
     RECONNECT = 'reconnect',
     RECONNECTING = 'reconnecting',
     RECONNECT_ERROR = 'reconnect_error',
-    RECONNECT_FAILED = 'reconnect_failed'
+    RECONNECT_FAILED = 'reconnect_failed',
+    MESSAGE = 'message'
 }
 
 export const SERVER_URL_SOCKETIO = 'http://localhost:4000'

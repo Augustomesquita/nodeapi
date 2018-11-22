@@ -14,7 +14,11 @@ export class SocketService {
 
   public onEvent(event: EventSocket): Observable<any> {
     return new Observable<Event>(observer => {
-      this.socket.on(event, () => observer.next());
+      this.socket.on(event, (data) => observer.next(data));
     });
+  }
+
+  public sendMessage(event: EventSocket, data: any) {
+    this.socket.emit(event, JSON.stringify(data));
   }
 }

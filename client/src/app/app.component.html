@@ -4,6 +4,9 @@
     <h1>Aplicação SocketIO Client</h1>
     <p>Endereço do servidor Socket IO: <i style="color: blueviolet">{{ urlServerSocketIo }}</i></p>
     <p [ngStyle]="messageSocketIoStatusColor()">Status: {{ connectionSocketIoStatus.message }}</p>
+    <button (click)="sendTesteMessage()" mat-raised-button color="primary">ENVIAR MENSAGEM DE TESTE PARA SOCKET IO</button>
+    <br/>
+
   </div>
 
   <div>
